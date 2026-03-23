@@ -32,11 +32,6 @@ const achievements = [
   },
 ]
 
-const certs = [
-  { name: 'Basics of Data Structures and Algorithms', org: 'LPU', date: 'Nov 2025' },
-  { name: 'Introduction to Cloud Computing', org: 'NPTEL', date: 'Jun 2025' },
-]
-
 /* ── Jayghosha Event Visual ── */
 function JayghoshaEventVisual() {
   return (
@@ -361,30 +356,6 @@ export default function Achievements() {
                   </div>
                 </div>
               )}
-            </div>
-          ))}
-        </div>
-
-        {/* Certificates */}
-        <div style={{ background: 'var(--bg)', border: '1px solid var(--border)', borderTop: 'none' }}>
-          <div style={{ padding: '1.5rem 2.5rem', borderBottom: '1px solid var(--border)' }}>
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--muted)' }}>Certifications</span>
-          </div>
-          {certs.map((c, i) => (
-            <div key={i} style={{
-              display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-              padding: '1.25rem 2.5rem',
-              borderBottom: i < certs.length - 1 ? '1px solid var(--border)' : 'none',
-              transition: 'background 0.2s',
-            }}
-            onMouseEnter={e => e.currentTarget.style.background = 'var(--surface2)'}
-            onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
-            >
-              <div>
-                <div style={{ fontWeight: 600, fontSize: '0.95rem' }}>{c.name}</div>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'var(--muted)', marginTop: 3, letterSpacing: '0.08em' }}>{c.org}</div>
-              </div>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'var(--muted)', letterSpacing: '0.08em' }}>{c.date}</div>
             </div>
           ))}
         </div>
