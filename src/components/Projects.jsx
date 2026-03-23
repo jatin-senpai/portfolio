@@ -203,14 +203,13 @@ function Mockup({ type }) {
 
 export default function Projects() {
   const [hovered, setHovered] = useState(null)
-  const [expanded, setExpanded] = useState(null)
 
   return (
     <section id="projects" style={{ padding: '8rem 4rem', background: 'var(--surface)', position: 'relative' }}>
-      <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+      <div style={{ maxWidth: '100%', margin: '0 auto' }}>
         <SectionLabel text="Projects" />
 
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '4rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '4rem', paddingRight: '2rem' }}>
           <h2 style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 800, lineHeight: 1, letterSpacing: '-0.03em' }}>
             Selected<br />
             <span style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontWeight: 400, color: 'var(--muted2)' }}>work</span>
@@ -226,29 +225,23 @@ export default function Projects() {
           >View all on GitHub →</a>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem', overflowX: 'auto', paddingRight: '2rem' }}>
           {projects.map((p, i) => (
             <ProjectCard
               key={i}
               project={p}
               hovered={hovered === i}
-              expanded={expanded === i}
               onHover={() => setHovered(i)}
               onLeave={() => setHovered(null)}
-              onToggle={() => setExpanded(expanded === i ? null : i)}
             />
           ))}
         </div>
       </div>
-
-      <style>{`
-        .mockup-panel { transition: max-height 0.55s cubic-bezier(0.16,1,0.3,1), opacity 0.35s ease; overflow: hidden; }
-      `}</style>
     </section>
   )
 }
 
-function ProjectCard({ project: p, hovered, expanded, onHover, onLeave, onToggle }) {
+function ProjectCard({ project: p, hovered, onHover, onLeave }) {
   const ref = useRef(null)
 
   useEffect(() => {
@@ -265,8 +258,8 @@ function ProjectCard({ project: p, hovered, expanded, onHover, onLeave, onToggle
       ref={ref}
       className="reveal-block"
       style={{
-        background: hovered || expanded ? 'var(--surface2)' : 'var(--bg)',
-        border: `1px solid ${hovered || expanded ? p.accent + '35' : 'var(--border)'}`,
+        background: hovered ? 'var(--surface2)' : 'var(--bg)',
+        border: `1px solid ${hovered ? p.accent + '35' : 'var(--border)'}`,
         borderRadius: 12,
         transition: 'background 0.3s, border-color 0.3s',
         position: 'relative',
@@ -276,7 +269,7 @@ function ProjectCard({ project: p, hovered, expanded, onHover, onLeave, onToggle
       <div style={{
         position: 'absolute', left: 0, top: 0, right: 0, height: 2,
         background: p.accent,
-        transform: hovered || expanded ? 'scaleX(1)' : 'scaleX(0)',
+        transform: hovered ? 'scaleX(1)' : 'scaleX(0)',
         transformOrigin: 'left',
         transition: 'transform 0.4s ease',
       }} />
@@ -284,81 +277,66 @@ function ProjectCard({ project: p, hovered, expanded, onHover, onLeave, onToggle
       <div
         onMouseEnter={onHover}
         onMouseLeave={onLeave}
-        style={{ display: 'grid', gridTemplateColumns: '80px 1fr auto', gap: '2rem', alignItems: 'start', padding: '2.5rem' }}
+        style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem', padding: '1.8rem' }}
       >
-        <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--muted)', letterSpacing: '0.1em', paddingTop: 4 }}>{p.number}</div>
-
-        <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.5rem', flexWrap: 'wrap' }}>
-            <h3 style={{ fontSize: 'clamp(1.4rem, 3vw, 2rem)', fontWeight: 800, letterSpacing: '-0.02em' }}>{p.title}</h3>
-            <span style={{
-              fontFamily: 'var(--font-mono)', fontSize: '0.6rem',
-              letterSpacing: '0.12em', textTransform: 'uppercase',
-              background: `${p.accent}18`, color: p.accent,
-              border: `1px solid ${p.accent}30`,
-              padding: '0.25rem 0.75rem', borderRadius: '100px',
-            }}>{p.highlight}</span>
+        {/* Project Info */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
+          <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.8rem' }}>
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.9rem', fontWeight: 800, color: p.accent, minWidth: 30 }}>{p.number}</div>
+            <div style={{ flex: 1 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.3rem', flexWrap: 'wrap' }}>
+                <h3 style={{ fontSize: '1.1rem', fontWeight: 800, letterSpacing: '-0.02em', margin: 0 }}>{p.title}</h3>
+                <span style={{
+                  fontFamily: 'var(--font-mono)', fontSize: '0.5rem',
+                  letterSpacing: '0.1em', textTransform: 'uppercase',
+                  background: `${p.accent}18`, color: p.accent,
+                  border: `1px solid ${p.accent}30`,
+                  padding: '0.15rem 0.5rem', borderRadius: '100px',
+                }}>{p.highlight}</span>
+              </div>
+              <div style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', color: 'var(--muted2)', fontSize: '0.8rem' }}>{p.subtitle}</div>
+            </div>
           </div>
-          <div style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', color: 'var(--muted2)', marginBottom: '1rem', fontSize: '1.05rem' }}>{p.subtitle}</div>
-          <p style={{ color: 'var(--muted2)', lineHeight: 1.7, fontSize: '0.9rem', maxWidth: 640, marginBottom: '1.5rem' }}>{p.description}</p>
-          <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-            {p.tags.map(t => (
+          <p style={{ color: 'var(--muted2)', lineHeight: 1.5, fontSize: '0.8rem', margin: 0 }}>{p.description}</p>
+          <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
+            {p.tags.slice(0, 3).map(t => (
               <span key={t} style={{
-                fontFamily: 'var(--font-mono)', fontSize: '0.65rem',
+                fontFamily: 'var(--font-mono)', fontSize: '0.55rem',
                 letterSpacing: '0.08em', color: 'var(--muted2)',
                 background: 'var(--surface)', border: '1px solid var(--border)',
-                padding: '0.3rem 0.7rem', borderRadius: 4,
+                padding: '0.2rem 0.5rem', borderRadius: 3,
               }}>{t}</span>
             ))}
           </div>
+          <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', fontSize: '0.75rem' }}>
+            <div style={{ fontFamily: 'var(--font-mono)', color: 'var(--muted)', letterSpacing: '0.08em' }}>{p.period}</div>
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
+              <a href={p.github} target="_blank" rel="noopener noreferrer" style={{
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontFamily: 'var(--font-mono)', fontSize: '0.55rem',
+                letterSpacing: '0.08em', textTransform: 'uppercase',
+                color: 'var(--muted2)', transition: 'color 0.2s', padding: '0.3rem 0.6rem', border: '1px solid var(--border)', borderRadius: 3,
+              }}
+              onMouseEnter={e => { e.currentTarget.style.color = p.accent; e.currentTarget.style.borderColor = p.accent; }}
+              onMouseLeave={e => { e.currentTarget.style.color = 'var(--muted2)'; e.currentTarget.style.borderColor = 'var(--border)'; }}
+              ><GithubIcon /></a>
+              {p.live && (
+                <a href={p.live} target="_blank" rel="noopener noreferrer" style={{
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  fontFamily: 'var(--font-mono)', fontSize: '0.55rem',
+                  letterSpacing: '0.08em', textTransform: 'uppercase',
+                  color: 'var(--muted2)', transition: 'color 0.2s', padding: '0.3rem 0.6rem', border: `1px solid ${p.accent}50`,
+                }}
+                onMouseEnter={e => { e.currentTarget.style.color = p.accent; e.currentTarget.style.borderColor = p.accent; }}
+                onMouseLeave={e => { e.currentTarget.style.color = 'var(--muted2)'; e.currentTarget.style.borderColor = `${p.accent}50`; }}
+                ><LiveIcon /></a>
+              )}
+            </div>
+          </div>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', minWidth: 130, alignItems: 'flex-end' }}>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.62rem', color: 'var(--muted)', letterSpacing: '0.1em' }}>{p.period}</div>
-          <a href={p.github} target="_blank" rel="noopener noreferrer" style={{
-            display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '0.4rem',
-            fontFamily: 'var(--font-mono)', fontSize: '0.68rem',
-            letterSpacing: '0.08em', textTransform: 'uppercase',
-            color: 'var(--muted2)', transition: 'color 0.2s',
-          }}
-          onMouseEnter={e => e.currentTarget.style.color = 'var(--text)'}
-          onMouseLeave={e => e.currentTarget.style.color = 'var(--muted2)'}
-          ><GithubIcon /> Source</a>
-          {p.live && (
-            <a href={p.live} target="_blank" rel="noopener noreferrer" style={{
-              display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '0.4rem',
-              fontFamily: 'var(--font-mono)', fontSize: '0.68rem',
-              letterSpacing: '0.08em', textTransform: 'uppercase',
-              color: p.accent, transition: 'opacity 0.2s',
-            }}
-            onMouseEnter={e => e.currentTarget.style.opacity = '0.65'}
-            onMouseLeave={e => e.currentTarget.style.opacity = '1'}
-            ><LiveIcon /> Live</a>
-          )}
-          <button onClick={onToggle} style={{
-            marginTop: '0.25rem',
-            display: 'flex', alignItems: 'center', gap: '0.4rem',
-            fontFamily: 'var(--font-mono)', fontSize: '0.65rem',
-            letterSpacing: '0.08em', textTransform: 'uppercase',
-            color: expanded ? p.accent : 'var(--muted)',
-            background: expanded ? `${p.accent}12` : 'transparent',
-            border: `1px solid ${expanded ? p.accent + '40' : 'var(--border)'}`,
-            padding: '0.4rem 0.9rem', borderRadius: 6,
-            cursor: 'pointer', transition: 'all 0.2s',
-          }}>
-            <span style={{ display: 'inline-block', transition: 'transform 0.3s', transform: expanded ? 'rotate(180deg)' : 'none' }}>▼</span>
-            {expanded ? 'Hide' : 'Preview'}
-          </button>
-        </div>
-      </div>
-
-      <div className="mockup-panel" style={{ maxHeight: expanded ? '340px' : '0px', opacity: expanded ? 1 : 0 }}>
-        <div style={{
-          margin: '0 2.5rem 2.5rem',
-          borderRadius: 10, overflow: 'hidden',
-          border: `1px solid ${p.accent}25`,
-          boxShadow: `0 0 50px ${p.accent}12`,
-        }}>
+        {/* Mockup */}
+        <div style={{ borderRadius: 8, overflow: 'hidden', border: `1px solid ${p.accent}25`, height: 160 }}>
           <Mockup type={p.mockup} />
         </div>
       </div>
