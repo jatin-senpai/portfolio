@@ -195,7 +195,26 @@ export default function Hero() {
         <div style={{
           flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center',
           animation: visible ? 'fadeUp 0.8s ease 0.4s both' : 'none',
+          position: 'relative',
         }}>
+          {/* Animated background rings */}
+          <div style={{
+            position: 'absolute',
+            width: 320,
+            height: 320,
+            borderRadius: '50%',
+            border: '1px solid rgba(184, 245, 66, 0.2)',
+            animation: visible ? 'spin 20s linear infinite' : 'none',
+          }} />
+          <div style={{
+            position: 'absolute',
+            width: 360,
+            height: 360,
+            borderRadius: '50%',
+            border: '1px solid rgba(66, 200, 245, 0.15)',
+            animation: visible ? 'spin 30s linear infinite reverse' : 'none',
+          }} />
+
           <div style={{
             position: 'relative',
             width: 280,
@@ -205,6 +224,7 @@ export default function Hero() {
             border: '3px solid var(--accent)',
             boxShadow: `0 0 40px ${visible ? 'rgba(184,245,66,0.4)' : 'transparent'}`,
             transition: 'box-shadow 0.8s ease',
+            animation: visible ? 'float 3s ease-in-out infinite, pulse 2s ease-in-out infinite' : 'none',
           }}>
             <img 
               src="/profile.jpg" 
@@ -213,6 +233,13 @@ export default function Hero() {
                 width: '100%',
                 height: '100%',
                 objectFit: 'cover',
+                transition: 'transform 0.3s ease',
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.transform = 'scale(1.05)'
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.transform = 'scale(1)'
               }}
             />
           </div>
