@@ -98,7 +98,10 @@ export default function Hero() {
         opacity: 0.4,
       }} />
 
-      <div style={{ position: 'relative', maxWidth: 900, opacity: visible ? 1 : 0, transition: 'opacity 0.8s ease' }}>
+      <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '4rem', opacity: visible ? 1 : 0, transition: 'opacity 0.8s ease' }}>
+        
+        {/* Left side - Text content */}
+        <div style={{ flex: 1, maxWidth: 600 }}>
         <div style={{
           fontFamily: 'var(--font-mono)', fontSize: '0.72rem',
           letterSpacing: '0.2em', textTransform: 'uppercase',
@@ -185,6 +188,34 @@ export default function Hero() {
           >
             <DownloadIcon /> Resume
           </a>
+        </div>
+        </div>
+
+        {/* Right side - Profile Image */}
+        <div style={{
+          flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center',
+          animation: visible ? 'fadeUp 0.8s ease 0.4s both' : 'none',
+        }}>
+          <div style={{
+            position: 'relative',
+            width: 280,
+            height: 280,
+            borderRadius: '50%',
+            overflow: 'hidden',
+            border: '3px solid var(--accent)',
+            boxShadow: `0 0 40px ${visible ? 'rgba(184,245,66,0.4)' : 'transparent'}`,
+            transition: 'box-shadow 0.8s ease',
+          }}>
+            <img 
+              src="/profile.jpg" 
+              alt="Jatin Yadav" 
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+              }}
+            />
+          </div>
         </div>
       </div>
 

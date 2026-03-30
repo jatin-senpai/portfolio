@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react'
 const stats = [
   { value: '100+', label: 'DSA Problems Solved' },
   { value: '3', label: 'Full Stack Projects' },
-  { value: '7.88', label: 'CGPA at LPU' },
+  { value: '7.82', label: 'CGPA at LPU' },
   { value: '1000+', label: 'Competition Participants Beaten' },
 ]
 
